@@ -2,8 +2,8 @@
   "name":"crowdboticsTest",
   "main":"server.js",
   "dependencies" : {
-    "express":"latest",
-    "mongoose":"latest",
+    "express":"3.0",
+    "mongoose":"4.0",
     "node-restful":"latest"
   }
 }
