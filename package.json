@@ -1,9 +1,26 @@
 {
-  "name":"crowdboticsTest",
-  "main":"server.js",
-  "dependencies" : {
-    "express": ">=3.0.0 <4.0.0",
-    "mongoose":"latest",
-    "node-restful":"latest"
-  }
+  "name": "studentList",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "express": "^4.11.1",
+    "mongojs": "^0.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GathuaKiragu/RestfulApi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GathuaKiragu/RestfulApi.git/issues"
+  },
+  "homepage": "https://github.com/GathuaKiragu/RestfulApi.git"
 }

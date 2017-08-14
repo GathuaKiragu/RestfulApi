@@ -1,24 +1,55 @@
-// Importing libraries
 var express = require('express');
-    restful = require('node-restful');
-    mongoose = restful.mongoose;
-
-// building express server
 var app = express();
-app.use(express.bodyParser());
-app.use(express.methodOverride());
+var mongojs = require('mongojs');
+var db = mongojs('studentlist', ['studentlist']);
+var bodyParser = require('body-parser');
 
-// Connecting to mongoDb
-mongoose.connect('mongodb://localhost/crowdboticsTest');
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
 
-var StudentSchema = mongoose.Schema({
-  name: String,
-  class: String,
-  age: Number
+app.get('/studentlist', function (req, res) {
+  console.log('I received a GET request');
+
+  db.studentlist.find(function (err, docs) {
+    console.log(docs);
+    res.json(docs);
+  });
 });
 
- var Students = restful.model('students', StudentSchema);
- Students.methods(['get', 'put', 'post', 'delete']);
- Students.register(app, '/api/students');
- app.listen(3000);
- console.log('Server is running correctly');
+app.post('/studentlist', function (req, res) {
+  console.log(req.body);
+  db.studentlist.insert(req.body, function(err, doc) {
+    res.json(doc);
+  });
+});
+
+app.delete('/studentlist/:id', function (req, res) {
+  var id = req.params.id;
+  console.log(id);
+  db.studentlist.remove({_id: mongojs.ObjectId(id)}, function (err, doc) {
+    res.json(doc);
+  });
+});
+
+app.get('/studentlist/:id', function (req, res) {
+  var id = req.params.id;
+  console.log(id);
+  db.studentlist.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+    res.json(doc);
+  });
+});
+
+app.put('/studentlist/:id', function (req, res) {
+  var id = req.params.id;
+  console.log(req.body.name);
+  db.studentlist.findAndModify({
+    query: {_id: mongojs.ObjectId(id)},
+    update: {$set: {name: req.body.name, email: req.body.email, number: req.body.number}},
+    new: true}, function (err, doc) {
+      res.json(doc);
+    }
+  );
+});
+
+app.listen(3000);
+console.log("Server running on port 3000");
